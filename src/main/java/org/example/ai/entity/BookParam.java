@@ -1,9 +1,8 @@
-package org.example.ai.entiry;
+package org.example.ai.entity;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  *

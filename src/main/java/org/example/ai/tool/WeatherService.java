@@ -1,6 +1,6 @@
 package org.example.ai.tool;
 
-import org.example.ai.entiry.CityWeatherInfo;
+import org.example.ai.entity.CityWeatherInfo;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;

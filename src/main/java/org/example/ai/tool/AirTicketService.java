@@ -1,15 +1,12 @@
 package org.example.ai.tool;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.ai.entiry.AirTicket;
-import org.example.ai.entiry.BookParam;
-import org.example.ai.entiry.CityWeatherInfo;
+import org.example.ai.entity.AirTicket;
+import org.example.ai.entity.BookParam;
 import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

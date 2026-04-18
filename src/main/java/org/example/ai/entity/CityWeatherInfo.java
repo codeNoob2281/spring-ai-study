@@ -1,4 +1,4 @@
-package org.example.ai.entiry;
+package org.example.ai.entity;
 
 /**
  * @author floyd
