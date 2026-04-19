@@ -13,7 +13,8 @@ public class OpenAiConfig {
 
     @Bean
     public ChatClient defaultChatClient(ChatModel chatModel) {
-        return ChatClient.builder(chatModel).build();
+        return ChatClient.builder(chatModel)
+                .build();
     }
 
     @Bean
