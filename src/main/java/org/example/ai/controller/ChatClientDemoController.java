@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.ai.entity.AirTicket;
 import org.example.ai.model.MultiChatModelService;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.ChatClientResponse;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.metadata.Usage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -12,10 +15,13 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author floyd
@@ -30,6 +36,9 @@ public class ChatClientDemoController {
 
     @Resource
     MultiChatModelService multiChatModelService;
+
+    @Resource
+    ChatClient tellJokeChatClient;
 
     @GetMapping("/send-message")
     public String sendMessage(String message) {
@@ -92,6 +101,44 @@ public class ChatClientDemoController {
         return defaultChatClient.prompt()
                 .user(message)
                 .stream()
+                .content();
+    }
+
+    @GetMapping("/send-message-attach-metadata")
+    public ChatClientResponse sendMessageAttachMetadata(String message) {
+        UserMessage userMessage = new UserMessage(message);
+        Map<String, Object> metaData = Map.of(
+                "userId", "uid001",
+                "userName", "zhangsan",
+                "reqId", UUID.randomUUID().toString(),
+                "timestamp", String.valueOf(System.currentTimeMillis())
+        );
+        userMessage.getMetadata().putAll(metaData);
+        log.info("用户信息：{}", userMessage.getMetadata());
+
+        return defaultChatClient.prompt()
+                .system(s -> s.text("You are a helpful assistant!")
+                        .metadata("version", "1.0.0"))
+                .messages(userMessage)
+                .call()
+                .chatClientResponse();
+    }
+
+    @GetMapping("/send-message-use-defaults")
+    public String sendMessageUseDefaults(@RequestParam(defaultValue = "中文") String language) {
+        return tellJokeChatClient.prompt()
+                .system(s -> s.param("language", language))
+                .user("讲一个笑话吧")
+                .call()
+                .content();
+    }
+
+    @GetMapping("/send-message-and-logging")
+    public String sendMessageAndLogging(String message) {
+        return defaultChatClient.prompt()
+                .advisors(new SimpleLoggerAdvisor())
+                .user(message)
+                .call()
                 .content();
     }
 }

@@ -18,9 +18,9 @@ public class OpenAiConfig {
     }
 
     @Bean
-    public ChatClient girlFriendChatClient(ChatModel chatModel) {
+    public ChatClient tellJokeChatClient(ChatModel chatModel) {
         return ChatClient.builder(chatModel)
-                .defaultSystem("你是我的女朋友，名字叫小花，性格温柔可爱")
+                .defaultSystem("你是一个擅长讲笑话的聊天机器人，使用{language}语言将你的笑话分享给用户")
                 .build();
     }
 

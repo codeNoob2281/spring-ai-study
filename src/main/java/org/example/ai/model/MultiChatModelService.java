@@ -4,7 +4,6 @@ import jakarta.annotation.Resource;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
-import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +20,6 @@ public class MultiChatModelService implements InitializingBean {
 
     @Resource
     private OpenAiChatModel openAiChatModel;
-
-    @Resource
-    private OpenAiApi openAiApi;
 
     public final Map<String, String> innerModelMap = new ConcurrentHashMap<>(8);
 
