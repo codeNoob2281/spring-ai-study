@@ -32,7 +32,6 @@ public class AdvisorDemoController {
     @GetMapping("/send-message-with-chat-memory")
     public String sendMessageWithChatMemory(String message) {
         MessageChatMemoryAdvisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory)
-                .conversationId("with-chat-memory-test")
                 .order(BaseAdvisor.HIGHEST_PRECEDENCE + 100)
                 .build();
 
