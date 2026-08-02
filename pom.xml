@@ -35,6 +35,7 @@
     <modules>
         <module>ai-example</module>
         <module>ai-alibaba-demo</module>
+        <module>floyd-minecraft-agent</module>
     </modules>
 
     <dependencyManagement>

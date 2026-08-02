@@ -1,0 +1,50 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: floyd-minecraft-agent
+  profiles:
+    active: dev
+  ai:
+    retry:
+      max-attempts: 3
+      on-client-errors: false
+    openai:
+      # OpenAI (兼容火山引擎豆包)
+      base-url: https://ark.cn-beijing.volces.com/api
+      api-key: xxx
+      chat:
+        completions-path: /v3/chat/completions
+        options:
+          model: doubao-seed-2-0-pro-260215
+          reasoning-effort: low
+      # emb
+      embedding:
+        base-url: https://api.siliconflow.cn
+        api-key: sk-xxx
+        options:
+          model: BAAI/bge-m3
+    # milvus
+    vectorstore:
+      milvus:
+        client:
+          host: 192.168.255.134
+          port: 19530
+          username: root
+          password: ""
+        database-name: spring_ai_demo
+        collection-name: vector_store
+        embedding-dimension: 1024
+        index-type: ivf-flat
+        metric-type: cosine
+        initialize-schema: true
+
+logging:
+  level:
+    root: info
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
+
+minecraft:
+  api:
+    key: ${UAPI_KEY:}
